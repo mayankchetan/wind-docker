@@ -1,0 +1,35 @@
+# Build image: docker build . -t openfast-dev
+# Start container (SYS_PTRACE required for debuging to work):
+# docker run -dit --cap-add=SYS_PTRACE --mount \
+#	type=bind,source=~/projects,target=/projects \
+#	--name=dev openfast-dev
+
+FROM ubuntu:latest
+
+ENV DEBIAN_FRONTEND=noninteractive TZ=America/Denver
+ENV PIP_ROOT_USER_ACTION=ignore
+
+# Development tools/libraries
+RUN apt update -qq && \
+    apt install -y git git-lfs wget \
+    build-essential gcc g++ gfortran cmake ninja-build \
+    gdb valgrind  \
+    libopenblas-serial-dev libopenmpi-dev \
+    libxml2-dev libhdf5-dev libyaml-cpp-dev \
+    doxygen graphviz python3-sphinx texlive python3-pip
+
+# Python packages
+RUN pip3 install numpy bokeh fortls psutil scipy pandas
+
+# Clone and build OpenFAST
+RUN git clone --single-branch --branch dev https://github.com/OpenFAST/openfast 
+
+#RUN cd openfast  \
+#    mkdir build \
+#    cd build
+
+WORKDIR openfast/build  
+   
+RUN cmake .. -DCMAKE_BUILD_TYPE=Debug
+    
+RUN make openfast
