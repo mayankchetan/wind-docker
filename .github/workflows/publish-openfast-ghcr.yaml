@@ -5,7 +5,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: openfast-dev
+  IMAGE_NAME: openfastDev
 
 jobs:
   build-and-push-image:
