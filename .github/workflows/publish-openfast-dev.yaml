@@ -55,7 +55,7 @@ jobs:
           context: . #/openfast
           #file: ./openfast/Dockerfile-main
           push: true
-          build-args:|
+          build-args: |
             OPENFAST_MAIN=${{ env.OPENFAST_MAIN }}
           tags: |
             ${{ env.DOCKERREGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.mainVersion }}
