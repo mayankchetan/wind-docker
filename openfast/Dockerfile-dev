@@ -5,7 +5,7 @@
 #	--name=dev openfast-dev
 
 # FROM ubuntu:latest
-FROM centos
+FROM ubuntu
 
 ENV DEBIAN_FRONTEND=noninteractive TZ=America/Denver
 ENV PIP_ROOT_USER_ACTION=ignore
