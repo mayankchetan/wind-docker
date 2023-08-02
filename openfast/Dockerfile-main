@@ -11,25 +11,22 @@ ENV PIP_ROOT_USER_ACTION=ignore
 
 # Development tools/libraries
 RUN apt update -qq && \
-    apt install -y git git-lfs wget \
+    apt install -y git wget \
     build-essential gcc g++ gfortran cmake ninja-build \
-    gdb valgrind  \
     libopenblas-serial-dev libopenmpi-dev \
     libxml2-dev libhdf5-dev libyaml-cpp-dev \
-    doxygen graphviz python3-sphinx texlive python3-pip
 
-# Python packages
-RUN pip3 install numpy bokeh fortls psutil scipy pandas
+
 
 # Clone and build OpenFAST
-RUN git clone --single-branch --branch dev https://github.com/OpenFAST/openfast 
+WORKDIR ~
 
-#RUN cd openfast  \
-#    mkdir build \
-#    cd build
+RUN git clone --single-branch --branch main https://github.com/OpenFAST/openfast 
 
 WORKDIR openfast/build  
    
 RUN cmake .. -DCMAKE_BUILD_TYPE=Debug
     
 RUN make openfast
+
+WORKDIR ~
