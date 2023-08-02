@@ -48,8 +48,8 @@ jobs:
       - name: Build and push Docker image - Versioned main
         uses: docker/build-push-action@v4
         with:
-          context: ./openfast
-          file: ./openfast/Dockerfile-main
+          context: . #/openfast
+          #file: ./openfast/Dockerfile-main
           push: true
           tags: |
             ${{ env.DOCKERREGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.mainVersion }}
@@ -63,8 +63,8 @@ jobs:
       - name: Build and push Docker image - Dev
         uses: docker/build-push-action@v4
         with:
-          context: ./openfast
-          file: ./openfast/Dockerfile-dev
+          context: . #/openfast
+          #file: ./openfast/Dockerfile-dev
           push: true
           tags: |
             ${{ env.DOCKERREGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.devVersion }}

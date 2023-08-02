@@ -8,8 +8,8 @@ FROM ubuntu:latest
 
 ENV DEBIAN_FRONTEND=noninteractive TZ=America/Denver
 ENV PIP_ROOT_USER_ACTION=ignore
-ENV OPENFAST_MAIN ../versionEnvVars.txt
-ENV OPENFAST_DEV ../versionEnvVars.txt
+ARG OPENFAST_MAIN ../versionEnvVars.txt
+
 
 # Development tools/libraries
 RUN apt update -qq && \
@@ -19,11 +19,10 @@ RUN apt update -qq && \
     libxml2-dev libhdf5-dev libyaml-cpp-dev
 
 
-
 # Clone and build OpenFAST
 WORKDIR ~
 
-RUN git clone --depth 1 --single-branch --branch main https://github.com/OpenFAST/openfast 
+RUN git clone --depth 1 --single-branch --branch ${OPENFAST_MAIN} https://github.com/OpenFAST/openfast 
 
 WORKDIR ~/openfast/build  
    
