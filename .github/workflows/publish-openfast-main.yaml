@@ -46,7 +46,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: ./openfast
-          file: ./base/Dockerfile-main
+          file: ./openfast/Dockerfile-main
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
