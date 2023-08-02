@@ -1,12 +1,7 @@
-name: Publish a Docker image of OpenFAST
+name: Docker images of OpenFAST
 on:
   push:
     branches: ['main']
-
-env:
-  DOCKERREGISTRY: mayankchetan
-  GHREGISTRY: ghcr.io/mayankchetan
-  IMAGE_NAME: openfast-dev
 
 
 jobs:
@@ -30,7 +25,7 @@ jobs:
 
       - uses: cardinalby/export-env-action@v2
         with:
-          envFile: 'versionEnvVars.txt'  
+          envFile: '.env'  
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
@@ -44,11 +39,11 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            ${{ env.DOCKERREGISTRY }}/${{ env.IMAGE_NAME }}
-            ${{ env.GHREGISTRY }}/${{ env.IMAGE_NAME }}
+            ${{ env.DOCKERREGISTRY }}/${{ env.OPENFAST_IMAGE_NAME }}
+            ${{ env.GHREGISTRY }}/${{ env.OPENFAST_IMAGE_NAME }}
 
       # Versioned main image
-      - name: Build and push Docker image - Versioned main
+      - name: Build and push Docker - main release
         if: always()
         uses: docker/build-push-action@v4
         with:
@@ -58,14 +53,14 @@ jobs:
           build-args: |
             OPENFAST_MAIN=${{ env.OPENFAST_MAIN }}
           tags: |
-            ${{ env.DOCKERREGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.OPENFAST_MAIN }}
-            ${{ env.DOCKERREGISTRY }}/${{ env.IMAGE_NAME }}:latest
-            ${{ env.GHREGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.OPENFAST_MAIN }}
-            ${{ env.GHREGISTRY }}/${{ env.IMAGE_NAME }}:latest
+            ${{ env.DOCKERREGISTRY }}/${{ env.OPENFAST_IMAGE_NAME }}:${{ env.OPENFAST_MAIN }}
+            ${{ env.DOCKERREGISTRY }}/${{ env.OPENFAST_IMAGE_NAME }}:latest
+            ${{ env.GHREGISTRY }}/${{ env.OPENFAST_IMAGE_NAME }}:${{ env.OPENFAST_MAIN }}
+            ${{ env.GHREGISTRY }}/${{ env.OPENFAST_IMAGE_NAME }}:latest
           labels: ${{ steps.meta.outputs.labels }}
 
       # Dev image
-      - name: Build and push Docker image - Dev
+      - name: Build and push Docker - Dev
         if: always()
         uses: docker/build-push-action@v4
         with:
@@ -75,6 +70,6 @@ jobs:
           build-args: |
             OPENFAST_MAIN=${{ env.OPENFAST_DEV }}
           tags: |
-            ${{ env.DOCKERREGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.OPENFAST_DEV }}
-            ${{ env.GHREGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.OPENFAST_DEV }}
+            ${{ env.DOCKERREGISTRY }}/${{ env.OPENFAST_IMAGE_NAME }}:${{ env.OPENFAST_DEV }}
+            ${{ env.GHREGISTRY }}/${{ env.OPENFAST_IMAGE_NAME }}:${{ env.OPENFAST_DEV }}
           labels: ${{ steps.meta.outputs.labels }}

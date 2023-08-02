@@ -4,11 +4,11 @@
 #	type=bind,source=~/projects,target=/projects \
 #	--name=dev openfast-dev
 
-# FROM ubuntu:latest
-FROM ubuntu
+FROM ubuntu:latest
 
 ENV DEBIAN_FRONTEND=noninteractive TZ=America/Denver
 ENV PIP_ROOT_USER_ACTION=ignore
+
 ARG OPENFAST_DEV=${OPENFAST_DEV:-"dev"}
 ENV OPENFAST_DEV=${OPENFAST_DEV}
 
