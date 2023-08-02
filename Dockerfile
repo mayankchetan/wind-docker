@@ -1,8 +1,6 @@
 
 FROM ubuntu
 
-ENV DEBIAN_FRONTEND=noninteractive TZ=America/Denver
-
+ENV OPENFAST_MAIN=${procss.env.OPENFAST_MAIN} 
 RUN echo "Hello, world! ~~" > hello-${OPENFAST_MAIN}.txt
-CMD ["env"]
-CMD ["ls"]
+RUN echo ${OPENFAST_MAIN}
