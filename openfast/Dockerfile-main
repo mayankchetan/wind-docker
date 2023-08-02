@@ -8,8 +8,7 @@ FROM ubuntu:latest
 
 ENV DEBIAN_FRONTEND=noninteractive TZ=America/Denver
 ENV PIP_ROOT_USER_ACTION=ignore
-ARG OPENFAST_MAIN ../versionEnvVars.txt
-
+ARG OPENFAST_MAIN=procss.env.
 
 # Development tools/libraries
 RUN apt update -qq && \
