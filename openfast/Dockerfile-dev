@@ -33,5 +33,4 @@ WORKDIR openfast/build
 RUN cmake .. -DCMAKE_BUILD_TYPE=Debug
     
 RUN make openfast
-
 WORKDIR ~
