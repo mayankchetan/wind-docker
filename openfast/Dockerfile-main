@@ -24,7 +24,7 @@ WORKDIR ~
 
 RUN git clone --depth 1 --single-branch --branch ${OPENFAST_MAIN} https://github.com/OpenFAST/openfast 
 
-WORKDIR ~/openfast/build  
+WORKDIR /openfast/build  
    
 RUN cmake .. -DCMAKE_BUILD_TYPE=Debug
     
