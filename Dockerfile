@@ -1,3 +1,3 @@
 FROM ubuntu
-RUN echo "Hello, world!" > /app/hello.txt
-CMD ["cat", "/app/hello.txt"]
+RUN echo "Hello, world!" > hello.txt
+CMD ["cat", "hello.txt"]
