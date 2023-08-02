@@ -7,6 +7,8 @@ env:
   DOCKERREGISTRY: mayankchetan
   GHREGISTRY: ghcr.io/mayankchetan
   IMAGE_NAME: openfast-dev
+  mainVersion: v3.5.0
+  devVersion: dev
 
 jobs:
   build-and-push-image:
@@ -42,11 +44,26 @@ jobs:
             ${{ env.DOCKERREGISTRY }}/${{ env.IMAGE_NAME }}
             ${{ env.GHREGISTRY }}/${{ env.IMAGE_NAME }}
 
-      - name: Build and push Docker image - Main
+      # Versioned main image
+      - name: Build and push Docker image - Versioned main
         uses: docker/build-push-action@v4
         with:
           context: .
           # file: ./openfast/Dockerfile-dev
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: |
+            ${{ env.DOCKERREGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.mainVersion }}
+            ${{ env.GHREGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.mainVersion }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      # Dev image
+      - name: Build and push Docker image - Dev
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          # file: ./openfast/Dockerfile-dev
+          push: true
+          tags: |
+            ${{ env.DOCKERREGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.devVersion }}
+            ${{ env.GHREGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.devVersion }}
           labels: ${{ steps.meta.outputs.labels }}
