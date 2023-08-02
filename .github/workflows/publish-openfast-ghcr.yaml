@@ -4,8 +4,8 @@ on:
     branches: ['main']
 
 env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: openfastDev
+  REGISTRY: ghcr.io/mayankchetan
+  IMAGE_NAME: openfast-dev
 
 jobs:
   build-and-push-image:
