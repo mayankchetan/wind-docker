@@ -14,7 +14,7 @@ RUN apt update -qq && \
     apt install -y git wget \
     build-essential gcc g++ gfortran cmake ninja-build \
     libopenblas-serial-dev libopenmpi-dev \
-    libxml2-dev libhdf5-dev libyaml-cpp-dev \
+    libxml2-dev libhdf5-dev libyaml-cpp-dev
 
 
 
