@@ -9,7 +9,8 @@ FROM ubuntu
 
 ENV DEBIAN_FRONTEND=noninteractive TZ=America/Denver
 ENV PIP_ROOT_USER_ACTION=ignore
-ARG OPENFAST_DEV ../versionEnvVars.txt
+ARG OPENFAST_DEV=${OPENFAST_DEV:-""}
+ENV OPENFAST_DEV=${OPENFAST_DEV}
 
 # Development tools/libraries
 RUN apt update -qq && \
