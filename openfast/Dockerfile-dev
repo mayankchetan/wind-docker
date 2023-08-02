@@ -4,10 +4,12 @@
 #	type=bind,source=~/projects,target=/projects \
 #	--name=dev openfast-dev
 
-FROM ubuntu:latest
+# FROM ubuntu:latest
+FROM centos
 
 ENV DEBIAN_FRONTEND=noninteractive TZ=America/Denver
 ENV PIP_ROOT_USER_ACTION=ignore
+ARG OPENFAST_DEV ../versionEnvVars.txt
 
 # Development tools/libraries
 RUN apt update -qq && \
@@ -26,7 +28,7 @@ WORKDIR ~
 # Clone and build OpenFAST
 WORKDIR ~
 
-RUN git clone --single-branch --branch dev https://github.com/OpenFAST/openfast 
+RUN git clone --single-branch --branch ${OPENFAST_DEV} https://github.com/OpenFAST/openfast 
 
 WORKDIR openfast/build  
    
