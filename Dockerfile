@@ -2,7 +2,8 @@
 FROM ubuntu
 
 ARG OPENFAST_MAIN
+ENV OPENFAST_MAIN=${OPENFAST_MAIN}
 
 
-RUN echo "Hello, world! ~~" > hello-$OPENFAST_MAIN.txt
+RUN echo "Hello, world! ~~" > hello-${OPENFAST_MAIN}.txt
 RUN echo ${OPENFAST_MAIN}
