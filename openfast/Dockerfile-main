@@ -4,7 +4,8 @@
 #	type=bind,source=~/projects,target=/projects \
 #	--name=dev openfast-dev
 
-FROM ubuntu:latest
+# not enforcing the version of ubuntu here, but it is a good idea to keep it up to date
+FROM ubuntu 
 
 ENV DEBIAN_FRONTEND=noninteractive TZ=America/Denver
 ENV PIP_ROOT_USER_ACTION=ignore
