@@ -21,6 +21,12 @@ jobs:
         with:
           envFile: '.env'  
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
       # Versioned main image
       - name: Build and push Docker - main release
         if: always()
@@ -37,7 +43,7 @@ jobs:
             macos/amd64
             macos/arm64
             windows/amd64
-            
+
 
 
       # # Dev image
