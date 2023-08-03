@@ -31,15 +31,22 @@ jobs:
           push: false
           build-args: |
             OPENFAST_MAIN=${{ env.OPENFAST_MAIN }}
+          platforms: |
+            linux/amd64
+            linux/arm64
+            macos/amd64
+            macos/arm64
+            windows/amd64
+            
 
 
-      # Dev image
-      - name: Build and push Docker - Dev
-        if: always()
-        uses: docker/build-push-action@v4
-        with:
-          context: ./openfast
-          file: ./openfast/Dockerfile-dev
-          push: false
-          build-args: |
-            OPENFAST_MAIN=${{ env.OPENFAST_DEV }}
+      # # Dev image
+      # - name: Build and push Docker - Dev
+      #   if: always()
+      #   uses: docker/build-push-action@v4
+      #   with:
+      #     context: ./openfast
+      #     file: ./openfast/Dockerfile-dev
+      #     push: false
+      #     build-args: |
+      #       OPENFAST_MAIN=${{ env.OPENFAST_DEV }}
