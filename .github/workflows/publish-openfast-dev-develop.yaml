@@ -38,7 +38,7 @@ jobs:
           build-args: |
             OPENFAST_MAIN=${{ env.OPENFAST_MAIN }}
           platforms: |
-            windows/amd64
+            arm64
             amd64
 
 
