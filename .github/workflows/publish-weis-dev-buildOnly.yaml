@@ -38,7 +38,6 @@ jobs:
           build-args: |
             WEIS_MAIN=${{ env.WEIS_MAIN }}
           platforms: |
-            arm64
             amd64
 
 
