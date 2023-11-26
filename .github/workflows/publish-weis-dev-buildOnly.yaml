@@ -1,0 +1,55 @@
+name: weis build only
+on:
+  push:
+    branches: ['develop']
+
+
+jobs:
+  build-image:
+    name: Build Docker images
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - uses: cardinalby/export-env-action@v2
+        with:
+          envFile: '.env'  
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      # Versioned main image
+      - name: Build and push Docker - main release
+        if: always()
+        uses: docker/build-push-action@v4
+        with:
+          context: ./weis
+          file: ./weis/Dockerfile-main
+          push: false
+          build-args: |
+            WEIS_MAIN=${{ env.WEIS_MAIN }}
+          platforms: |
+            arm64
+            amd64
+
+
+
+      # # Dev image
+      # - name: Build and push Docker - Dev
+      #   if: always()
+      #   uses: docker/build-push-action@v4
+      #   with:
+      #     context: ./openfast
+      #     file: ./openfast/Dockerfile-dev
+      #     push: false
+      #     build-args: |
+      #       OPENFAST_MAIN=${{ env.OPENFAST_DEV }}

@@ -1,0 +1,30 @@
+# Build image: docker build . -t openfast-dev
+# Start container (SYS_PTRACE required for debuging to work):
+# docker run -dit --cap-add=SYS_PTRACE --mount \
+#	type=bind,source=~/projects,target=/projects \
+#	--name=dev openfast-dev
+
+FROM mambaorg/micromamba:latest
+
+
+ARG WISDEM_MAIN=${WISDEM_MAIN:-"master"}
+ENV WISDEM_MAIN=${WISDEM_MAIN}
+
+# Development tools/libraries
+# RUN conda config --add channels conda-forge
+ADD --chown=$MAMBA_USER:$MAMBA_USER https://raw.githubusercontent.com/WISDEM/WEIS/main/environment.yml /tmp/env.yaml
+RUN micromamba install -y -n base -f /tmp/env.yaml python=3.10
+RUN micromamba install -y -n base -c conda-forge petsc4py mpi4py git
+RUN micromamba clean --all --yes
+RUN micromamba shell reinit --shell bash
+RUN micromamba activate base
+
+# Clone and build WISDEM
+
+RUN git clone --depth 1 --single-branch --branch ${WISDEM_MAIN} https://github.com/WISDEM/WEIS
+
+WORKDIR WISDEM  
+   
+RUN python setup.py develop
+    
+WORKDIR ~
