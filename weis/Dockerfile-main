@@ -7,8 +7,8 @@
 FROM mambaorg/micromamba:latest
 
 
-ARG WISDEM_MAIN=${WISDEM_MAIN:-"master"}
-ENV WISDEM_MAIN=${WISDEM_MAIN}
+ARG WEIS_MAIN=${WEIS_MAIN:-"master"}
+ENV WEIS_MAIN=${WEIS_MAIN}
 
 # Development tools/libraries
 # RUN conda config --add channels conda-forge
@@ -23,7 +23,7 @@ ARG MAMBA_DOCKERFILE_ACTIVATE=1
 # RUN micromamba activate base
 
 # Clone and build WEIS
-RUN git clone --depth 1 --single-branch --branch develop https://github.com/WISDEM/WEIS
+RUN git clone --depth 1 --single-branch --branch ${WEIS_MAIN} https://github.com/WISDEM/WEIS
 
 WORKDIR WEIS  
    

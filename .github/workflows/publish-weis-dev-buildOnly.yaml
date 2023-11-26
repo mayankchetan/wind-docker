@@ -17,9 +17,30 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.GHREGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GH_TOKEN }}
+
       - uses: cardinalby/export-env-action@v2
         with:
           envFile: '.env'  
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ${{ env.DOCKERREGISTRY }}/${{ env.WEIS_IMAGE_NAME }}
+            ${{ env.GHREGISTRY }}/${{ env.WEIS_IMAGE_NAME }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -34,21 +55,12 @@ jobs:
         with:
           context: ./weis
           file: ./weis/Dockerfile-main
-          push: false
+          push: true
           build-args: |
-            WEIS_MAIN=${{ env.WEIS_MAIN }}
+            WEIS_DEV=${{ env.WEIS_DEV }}
+          tags: |
+            ${{ env.DOCKERREGISTRY }}/${{ env.WEIS_IMAGE_NAME }}:${{ env.WEIS_DEV }}
+            ${{ env.GHREGISTRY }}/${{ env.WEIS_IMAGE_NAME }}:${{ env.WEIS_DEV }}
+          labels: ${{ steps.meta.outputs.labels }}
           platforms: |
             amd64
-
-
-
-      # # Dev image
-      # - name: Build and push Docker - Dev
-      #   if: always()
-      #   uses: docker/build-push-action@v4
-      #   with:
-      #     context: ./openfast
-      #     file: ./openfast/Dockerfile-dev
-      #     push: false
-      #     build-args: |
-      #       OPENFAST_MAIN=${{ env.OPENFAST_DEV }}
