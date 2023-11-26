@@ -16,8 +16,8 @@ ADD --chown=$MAMBA_USER:$MAMBA_USER https://raw.githubusercontent.com/WISDEM/WEI
 RUN micromamba install -y -n base -f /tmp/env.yaml python=3.10
 RUN micromamba install -y -n base -c conda-forge petsc4py mpi4py git
 RUN micromamba clean --all --yes
-RUN micromamba shell init --shell=basename($SHELL) --prefix=base
-# RUN eval "$(micromamba shell hook --shell=bash)"
+# RUN micromamba shell init --shell=basename($SHELL) --prefix=base
+RUN eval "$(micromamba shell hook --shell=bash)"
 RUN micromamba activate base
 
 # Clone and build WISDEM
