@@ -11,22 +11,18 @@ ARG WEIS_MAIN=${WEIS_MAIN:-"develop"}
 ENV WEIS_MAIN=${WEIS_MAIN}
 
 # Development tools/libraries
-# RUN conda config --add channels conda-forge
-ADD --chown=$MAMBA_USER:$MAMBA_USER https://raw.githubusercontent.com/WISDEM/WEIS/main/environment.yml /tmp/env.yaml
+ADD --chown=$MAMBA_USER:$MAMBA_USER https://raw.githubusercontent.com/WISDEM/WEIS/develop/environment.yml /tmp/env.yaml
 RUN micromamba install -y -n base -f /tmp/env.yaml python=3.10
 RUN micromamba install -y -n base -c conda-forge petsc4py mpi4py git
 RUN micromamba install -y -n base -c conda-forge compilers
 RUN micromamba clean --all --yes
-# RUN micromamba shell init --shell=basename($SHELL) --prefix=base
-# RUN eval "$(micromamba shell hook --shell=bash)"
 ARG MAMBA_DOCKERFILE_ACTIVATE=1
-# RUN micromamba activate base
 
 # Clone and build WEIS
 RUN git clone --depth 1 --single-branch --branch ${WEIS_MAIN} https://github.com/WISDEM/WEIS
 
-WORKDIR WEIS  
-   
+WORKDIR WEIS
+
 RUN python setup.py develop
-    
+
 WORKDIR ~
