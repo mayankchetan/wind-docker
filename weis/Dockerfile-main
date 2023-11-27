@@ -7,7 +7,7 @@
 FROM mambaorg/micromamba:latest
 
 
-ARG WEIS_MAIN=${WEIS_MAIN:-"master"}
+ARG WEIS_MAIN=${WEIS_MAIN:-"develop"}
 ENV WEIS_MAIN=${WEIS_MAIN}
 
 # Development tools/libraries
