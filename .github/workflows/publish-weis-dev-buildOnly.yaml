@@ -40,7 +40,7 @@ jobs:
         with:
           images: |
             ${{ env.DOCKERREGISTRY }}/${{ env.WEIS_IMAGE_NAME }}
-            # ${{ env.GHREGISTRY }}/${{ env.WEIS_IMAGE_NAME }}
+# ${{ env.GHREGISTRY }}/${{ env.WEIS_IMAGE_NAME }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -60,7 +60,7 @@ jobs:
             WEIS_DEV=${{ env.WEIS_DEV }}
           tags: |
             ${{ env.DOCKERREGISTRY }}/${{ env.WEIS_IMAGE_NAME }}:${{ env.WEIS_DEV }}
-            # ${{ env.GHREGISTRY }}/${{ env.WEIS_IMAGE_NAME }}:${{ env.WEIS_DEV }}
+# ${{ env.GHREGISTRY }}/${{ env.WEIS_IMAGE_NAME }}:${{ env.WEIS_DEV }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: |
             amd64
